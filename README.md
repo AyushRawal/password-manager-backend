@@ -22,7 +22,7 @@ Whenever a new user logs in, he/she is presented with some keys that can be stor
 
 This is the backend of the project.
 
-The web frontend repository : [password-manager-web-frontend](github.com/AyushRawal/password-manager-web-frontend).
+The web frontend repository : [password-manager-web-frontend](https://github.com/AyushRawal/password-manager-web-frontend).
 
 
 It is a REST API written using Flask in Python.
