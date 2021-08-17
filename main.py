@@ -14,23 +14,31 @@ class Record(db.Model):
     username = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
+    url = db.Column(db.String, nullable=True)
+    notes = db.Column(db.String, nullable=True)
 
-# db.create_all()
+#  db.create_all()
 
 record_put_args = reqparse.RequestParser()
 record_put_args.add_argument('title', type=str, help='Please provide title', required=True)
 record_put_args.add_argument('password', type=str, help='Please provide password', required=True)
+record_put_args.add_argument('url', type=str, help='URL', required=False)
+record_put_args.add_argument('notes', type=str, help='Notes', required=False)
 
 record_update_args = reqparse.RequestParser()
 record_update_args.add_argument('id', type=str, help='Please provide id', required=True)
 record_update_args.add_argument('title', type=str, help='Title', required=False)
 record_update_args.add_argument('password', type=str, help='Password', required=False)
+record_update_args.add_argument('url', type=str, help='URL', required=False)
+record_update_args.add_argument('notes', type=str, help='Notes', required=False)
 
 resource_fields = {
     'id': fields.String,
     'username': fields.String,
     'title': fields.String,
     'password': fields.String,
+    'url': fields.String,
+    'notes': fields.String,
 }
 
 resource_list_fields = {
@@ -48,7 +56,7 @@ class User(Resource):
     @marshal_with(resource_fields)
     def post(self, Username):
         args = record_put_args.parse_args()
-        record = Record(id=str(uuid4()), username=Username, title=args['title'], password=args['password'])
+        record = Record(id=str(uuid4()), username=Username, title=args['title'], password=args['password'], url=args['url'], notes=args['notes'])
         db.session.add(record)
         db.session.commit()
         return record
@@ -63,6 +71,10 @@ class User(Resource):
             record.title = args['title']
         if args['password']:
             record.password = args['password']
+        if args['url']:
+            record.url = args['url']
+        if args['notes']:
+            record.notes = args['notes']
 
         db.session.commit()
         return record
