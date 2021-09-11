@@ -36,7 +36,7 @@ To get the records of a user, perform a get request on https://secure-passwd-man
 
 This returns a json object which is an array of record objects.
 
-```json
+```
 {
     "records": [
         {
