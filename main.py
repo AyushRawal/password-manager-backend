@@ -32,9 +32,11 @@ record_update_args.add_argument('password', type=str, help='Password', required=
 record_update_args.add_argument('url', type=str, help='URL', required=False)
 record_update_args.add_argument('notes', type=str, help='Notes', required=False)
 
+record_delete_args = reqparse.RequestParser()
+record_delete_args.add_argument('id', type=str, help='Please provide id', required=True)
+
 resource_fields = {
     'id': fields.String,
-    'username': fields.String,
     'title': fields.String,
     'password': fields.String,
     'url': fields.String,
@@ -80,7 +82,7 @@ class User(Resource):
         return record
 
     def delete(self, Username):
-        args = record_update_args.parse_args()
+        args = record_delete_args.parse_args()
         record = Record.query.filter_by(id=args['id']).first()
         if not record:
             abort(404, message="Record does not exist")
